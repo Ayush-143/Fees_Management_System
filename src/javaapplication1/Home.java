@@ -5,7 +5,6 @@
 package javaapplication1;
 
 import java.awt.Color;
-import javax.swing.JFrame;
 
 /**
  *
@@ -18,8 +17,6 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
-        
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
 
     /**
@@ -82,9 +79,6 @@ public class Home extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel3MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel3MouseEntered(evt);
             }
@@ -105,9 +99,6 @@ public class Home extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(0, 102, 102));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel4MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel4MouseEntered(evt);
             }
@@ -128,9 +119,6 @@ public class Home extends javax.swing.JFrame {
         jPanel8.setBackground(new java.awt.Color(0, 102, 102));
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel8MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel8MouseEntered(evt);
             }
@@ -151,9 +139,6 @@ public class Home extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(0, 102, 102));
         jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel9MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel9MouseEntered(evt);
             }
@@ -174,9 +159,6 @@ public class Home extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(0, 102, 102));
         jPanel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel10MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel10MouseEntered(evt);
             }
@@ -197,9 +179,6 @@ public class Home extends javax.swing.JFrame {
         jPanel15.setBackground(new java.awt.Color(0, 102, 102));
         jPanel15.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel15.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel15MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel15MouseEntered(evt);
             }
@@ -220,11 +199,6 @@ public class Home extends javax.swing.JFrame {
         rSMaterialButtonRectangle1.setBackground(new java.awt.Color(0, 102, 102));
         rSMaterialButtonRectangle1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/my icons/exit.png"))); // NOI18N
         rSMaterialButtonRectangle1.setText("ABOUT");
-        rSMaterialButtonRectangle1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSMaterialButtonRectangle1ActionPerformed(evt);
-            }
-        });
         jPanel2.add(rSMaterialButtonRectangle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1350, 550, 140, 50));
 
         rSMaterialButtonRectangle2.setBackground(new java.awt.Color(0, 102, 102));
@@ -320,55 +294,6 @@ public class Home extends javax.swing.JFrame {
         login.show();
         this.dispose();
     }//GEN-LAST:event_rSMaterialButtonRectangle2ActionPerformed
-
-    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        // TODO add your handling code here:
-        addFees addfees = new addFees();
-        addfees.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jPanel4MouseClicked
-
-    private void rSMaterialButtonRectangle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonRectangle1ActionPerformed
-        // TODO add your handling code here:
-        About about = new About();
-        about.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_rSMaterialButtonRectangle1ActionPerformed
-
-    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        // TODO add your handling code here:
-        SearchRecord search = new SearchRecord();
-        search.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jPanel3MouseClicked
-
-    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
-        // TODO add your handling code here:
-        ViewRecord viewrecord = new ViewRecord();
-        viewrecord.show();
-        this.dispose();
-    }//GEN-LAST:event_jPanel10MouseClicked
-
-    private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
-        // TODO add your handling code here:
-        EditCourse editcourse = new EditCourse();
-        editcourse.show();
-        this.dispose();
-    }//GEN-LAST:event_jPanel8MouseClicked
-
-    private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
-        // TODO add your handling code here:
-        ViewCourse view = new ViewCourse();
-        view.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jPanel9MouseClicked
-
-    private void jPanel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel15MouseClicked
-        // TODO add your handling code here:
-        ViewReport report = new ViewReport();
-        report.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jPanel15MouseClicked
 
     /**
      * @param args the command line arguments
