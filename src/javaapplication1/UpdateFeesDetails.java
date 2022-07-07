@@ -13,17 +13,19 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.JFrame;
+import java.text.SimpleDateFormat;  
+import java.util.Date;  
 
 /**
  *
  * @author 91894
  */
-public class addFees extends javax.swing.JFrame {
+public class UpdateFeesDetails extends javax.swing.JFrame {
 
     /**
      * Creates new form addFees
      */
-    public addFees() {
+    public UpdateFeesDetails() {
         initComponents();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         displayCashFirst();
@@ -31,6 +33,8 @@ public class addFees extends javax.swing.JFrame {
         
         int receiptNo = getReceiptNo();
         txt_receiptno.setText(Integer.toString(receiptNo));
+        
+        setRecords();
     }
     
     public void displayCashFirst(){
@@ -96,7 +100,7 @@ public class addFees extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Please enter header name!");
             return false;
         }
-        if(txt_rollno.getText().equals("") || txt_rollno.getText().matches("[0-9]+") == false){
+        if(txt_rollno.getText().equals("")){
             JOptionPane.showMessageDialog(this,"Please enter fees amount(in numbers)!");
             return false;
         }
@@ -136,7 +140,7 @@ public class addFees extends javax.swing.JFrame {
         return receiptNo+1;
     }
     
-    public String insertData(){
+    public String updateData(){
         
         String status = "";
         
@@ -164,27 +168,27 @@ public class addFees extends javax.swing.JFrame {
         try{
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/fees_ms","root","root");
-            PreparedStatement pst = con.prepareStatement("insert into fees_details values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pst = con.prepareStatement("update fees_details set student_name = ?,roll_no = ?,payment_mode = ?,cheque_no = ?,dd_no = ?,upi_no = ?,bank_name = ?,course_name = ?,gstin = ?,amount = ?,date_of_receipt = ?,total_amount = ?,cgst = ?,sgst = ?,total_in_words = ?,remark = ?,year1 = ?,year2 = ? where reciept_no=?");
             
-            pst.setInt(1, receiptNo);
-            pst.setString(2, studentName);
-            pst.setString(3, rollNo);
-            pst.setString(4, paymentMode);
-            pst.setString(5, ChequeNo);
-            pst.setString(6, ddNo);
-            pst.setString(7, upiNo);
-            pst.setString(8, bankName);
-            pst.setString(9, courseName);
-            pst.setString(10, gstIN);
-            pst.setFloat(11, Amount);
-            pst.setString(12, date);
-            pst.setFloat(13, totalAmount);
-            pst.setFloat(14, cgst);
-            pst.setFloat(15, sgst);
-            pst.setString(16, totalInWords);
-            pst.setString(17, remarks);
-            pst.setInt(18, year1);
-            pst.setInt(19, year2);
+            pst.setString(1, studentName);
+            pst.setString(2, rollNo);
+            pst.setString(3, paymentMode);
+            pst.setString(4, ChequeNo);
+            pst.setString(5, ddNo);
+            pst.setString(6, upiNo);
+            pst.setString(7, bankName);
+            pst.setString(8, courseName);
+            pst.setString(9, gstIN);
+            pst.setFloat(10, Amount);
+            pst.setString(11, date);
+            pst.setFloat(12, totalAmount);
+            pst.setFloat(13, cgst);
+            pst.setFloat(14, sgst);
+            pst.setString(15, totalInWords);
+            pst.setString(16, remarks);
+            pst.setInt(17, year1);
+            pst.setInt(18, year2);
+            pst.setInt(19, receiptNo);
             
             int rowCount = pst.executeUpdate();
             if(rowCount == 1){
@@ -199,6 +203,89 @@ public class addFees extends javax.swing.JFrame {
         }
         
         return status;
+    }
+    
+    public void setRecords(){
+        try{
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/fees_ms","root","root");
+            PreparedStatement pst = con.prepareStatement("select * from fees_details order by reciept_no desc fetch first 1 rows only");
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            
+            txt_receiptno.setText(rs.getString("reciept_no"));
+            combo_payementmode.setSelectedItem(rs.getString("payment_mode"));
+            String payment = rs.getString("payment_mode");
+            if(payment.equalsIgnoreCase("cash")){
+                lbl_ddno.setVisible(false);
+                txt_ddno.setVisible(false);
+                lbl_chequeno.setVisible(false);
+                txt_chequeno.setVisible(false);
+                lbl_upino.setVisible(false);
+                txt_upino.setVisible(false);
+                lbl_bankname.setVisible(false);
+                txt_bankname.setVisible(false);
+            }
+            if(payment.equalsIgnoreCase("demand draft")){
+                lbl_ddno.setVisible(true);
+                txt_ddno.setText(rs.getString("dd_no"));
+                lbl_chequeno.setVisible(false);
+                txt_chequeno.setVisible(false);
+                lbl_upino.setVisible(false);
+                txt_upino.setVisible(false);
+                lbl_bankname.setVisible(true);
+                txt_bankname.setText(rs.getString("bank_name"));
+                
+            }
+            if(payment.equalsIgnoreCase("credit/ debit card")){
+                lbl_ddno.setVisible(false);
+                txt_ddno.setVisible(false);
+                lbl_chequeno.setVisible(false);
+                txt_chequeno.setVisible(false);
+                lbl_upino.setVisible(false);
+                txt_upino.setVisible(false);
+                lbl_bankname.setVisible(true);
+                txt_bankname.setText(rs.getString("bank_name"));
+            }
+            if(payment.equalsIgnoreCase("cheque")){
+                lbl_ddno.setVisible(false);
+                txt_ddno.setVisible(false);
+                lbl_chequeno.setVisible(true);
+                txt_chequeno.setText(rs.getString("cheque_no"));
+                lbl_upino.setVisible(false);
+                txt_upino.setVisible(false);
+                lbl_bankname.setVisible(true);
+                txt_bankname.setText(rs.getString("bank_name"));
+            }
+            if(payment.equalsIgnoreCase("upi")){
+                lbl_ddno.setVisible(false);
+                txt_ddno.setVisible(false);
+                lbl_chequeno.setVisible(false);
+                txt_chequeno.setVisible(false);
+                lbl_upino.setVisible(true);
+                txt_upino.setText(rs.getString("upi_no"));
+                lbl_bankname.setVisible(true);
+                txt_bankname.setText(rs.getString("bank_name"));
+            }
+            txt_recievedfrom.setText(rs.getString("student_name"));
+            String sDate = rs.getString("date_of_receipt");
+            SimpleDateFormat date1 = new SimpleDateFormat("yyyy-MM-dd");
+            date_current.setDate(date1.parse(sDate));
+            txt_rollno.setText(rs.getString("roll_no"));
+            date_year1.setText(rs.getString("year1"));
+            date_year2.setText(rs.getString("year2"));
+            combo_coursename.setSelectedItem(rs.getString("course_name"));
+            txt_header.setText(rs.getString("course_name"));
+            txt_amount1.setText(rs.getString("amount"));
+            txt_cgst.setText(rs.getString("cgst"));
+            txt_sgst.setText(rs.getString("sgst"));
+            txt_totalamount.setText(rs.getString("total_amount"));
+            lbl_totalwords.setText(rs.getString("total_in_words"));
+            txt_remarks.setText(rs.getString("remark"));
+            
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -925,14 +1012,15 @@ public class addFees extends javax.swing.JFrame {
     private void btn_printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_printActionPerformed
         // TODO add your handling code here:
         if(validation()){
-            String result = insertData();
+            String result = updateData();
             
             if(result == "success"){
+                JOptionPane.showMessageDialog(this,"Record Updated Successfully");
                 PrintReceipt print = new PrintReceipt();
                 print.show();
                 this.dispose();
             }else{
-                JOptionPane.showMessageDialog(this, "Insertion Failed");
+                JOptionPane.showMessageDialog(this, "Updation Failed");
             }
         }
     }//GEN-LAST:event_btn_printActionPerformed
@@ -975,20 +1063,6 @@ public class addFees extends javax.swing.JFrame {
         date_year2.setText(Integer.toString(year2));
     }//GEN-LAST:event_date_year1ActionPerformed
 
-    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        // TODO add your handling code here:
-        SearchRecord search = new SearchRecord();
-        search.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jPanel4MouseClicked
-
-    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-        // TODO add your handling code here:
-        ViewRecord viewrecord = new ViewRecord();
-        viewrecord.show();
-        this.dispose();
-    }//GEN-LAST:event_jPanel7MouseClicked
-
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
         // TODO add your handling code here:
         EditCourse editcourse = new EditCourse();
@@ -1002,6 +1076,20 @@ public class addFees extends javax.swing.JFrame {
         vcourse.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+        // TODO add your handling code here:
+        SearchRecord search = new SearchRecord();
+        search.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel4MouseClicked
+
+    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+        // TODO add your handling code here:
+        ViewRecord view = new ViewRecord();
+        view.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1020,20 +1108,21 @@ public class addFees extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addFees.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateFeesDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addFees.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateFeesDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addFees.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateFeesDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addFees.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateFeesDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new addFees().setVisible(true);
+                new UpdateFeesDetails().setVisible(true);
             }
         });
     }
