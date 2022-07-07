@@ -33,8 +33,8 @@ public class SignUpPage extends javax.swing.JFrame {
             Statement st = con.createStatement();
             rs = st.executeQuery(sql);
             while(rs.next()){
-                id++;
                 id = rs.getInt(1);
+                id++;
             }
         }catch(Exception e){
               e.printStackTrace();
@@ -133,7 +133,10 @@ public class SignUpPage extends javax.swing.JFrame {
             
             int updateRowCount = pst.executeUpdate();
             if(updateRowCount > 0){
-                JOptionPane.showMessageDialog(this, "Recorded Inserted Successfully");
+                JOptionPane.showMessageDialog(this, "Account Created - You are all set to login");
+                Login login = new Login();
+                login.show();
+        this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Record Insertion Failure");
             }
